@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /
+Options -Indexes
+
+
+# Jeśli żądanie dotyczy pliku lub katalogu, pozostaw je bez zmian
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Przekieruj /strona.php na /pages/strona.php
+RewriteRule ^([^/]+\.php)$ /pages/$1 [L]
