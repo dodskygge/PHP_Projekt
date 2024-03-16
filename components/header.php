@@ -22,6 +22,8 @@
 <?php
 // Pobierz bieżącą ścieżkę
 $current_page = basename($_SERVER['PHP_SELF']);
+//Start sesji
+session_start();
 ?>
 
 <!-- HEADER MENU -->
@@ -41,15 +43,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a class="nav-link" href="/">Strona główna</a>
                     </li>
                     <li class="nav-item dropdown mx-auto <?php if($current_page == 'shop.php') echo 'active'; ?>">
-                        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Sklep</a>
+                        <a class="d-flex justify-content-center nav-link " id="navbardrop" data-toggle="dropdown">Sklep</a>
 
                         <!-- Shop dropdown -->
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/shop.php?category=special">Oferty specjalne</a>
-                            <a class="dropdown-item" href="/shop.php?category=all">Wszystkie</a>
-                            <a class="dropdown-item" href="/shop.php?category=computers">Komputery</a>
-                            <a class="dropdown-item" href="/shop.php?category=laptops">Laptopy</a>
-                            <a class="dropdown-item" href="/shop.php?category=microcontrollers">Mikrokontrolery</a>
+                            <a class="dropdown-item text-center" href="/shop.php?category=special">Oferty specjalne</a>
+                            <a class="dropdown-item text-center" href="/shop.php?category=all">Wszystkie</a>
+                            <a class="dropdown-item text-center" href="/shop.php?category=computers">Komputery</a>
+                            <a class="dropdown-item text-center" href="/shop.php?category=laptops">Laptopy</a>
+                            <a class="dropdown-item text-center" href="/shop.php?category=microcontrollers">Mikrokontrolery</a>
                         </div>
 
                     </li>
