@@ -3,10 +3,12 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: #ffffff;
-    background-color: #16141d;
-    margin: 0;
+    background-color: #1b1824;
     height: 100%;
+    width: auto;
     padding: 0;
     box-sizing: border-box;
-    margin-top: 15px;
+}
+.cart-menu {
+    min-width: 300px;
 }
