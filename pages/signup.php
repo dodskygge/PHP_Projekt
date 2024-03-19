@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form_username = $_POST['username'];
     $form_email = $_POST['mail'];
     $form_password = $_POST['password'];
-
     $form_email_check = $_POST['mailCheck'];
     $form_password_check = $_POST['passwordCheck'];
 
@@ -41,10 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($stmt->execute()) {
                         $message = '<div class="alert alert-success d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Konto utworzono pomyślnie!</div>';
                     } else {
-                        echo "Error: " . $stmt->error;
+                        $message = '<div class="alert alert-danger d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Coś poszło nie tak!</div>';
                     }
                 }
-
                 $stmt->close();
             } else {
                 $message = '<div class="alert alert-danger d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Wpisz dane do formularza!</div>';
@@ -92,13 +90,11 @@ $conn->close();
     </div>
 </div>
 
-
 <?php
-//Notyfikacja
+//Notyfikacja-alert dla użytkownika
 if (!empty($message)) {
     echo $message;
 }
 ?>
-
 
 <?php include('../components/footer.php'); ?>

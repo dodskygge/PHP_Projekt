@@ -1,0 +1,12 @@
+Baza danych:
+    Trzeba dodać pola do bazy danych: ilość zakupionego towaru, czy_przecenione
+    Sortowanie po kategoriach produktów
+    
+
+
+
+
+Główne zadania:
+    Zrobić injecty, bazę produktów
+    Poprawić wygląd okienek dla zakupu
+    Opcja szukaj
