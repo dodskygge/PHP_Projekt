@@ -1,5 +1,5 @@
 Baza danych:
-    Trzeba dodać pola do bazy danych: ilość zakupionego towaru, czy_przecenione
+    //Trzeba dodać pola do bazy danych: ilość zakupionego towaru, czy_przecenione
     Sortowanie po kategoriach produktów
     
 

@@ -8,29 +8,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $token = bin2hex(random_bytes(16));
     $message = '';
 
-    // Token
-    $stmt = $conn->prepare("UPDATE users SET user_token = ? WHERE user_name = ?");
-    $stmt->bind_param("ss", $token, $form_username);
-    $stmt->execute();
-
     // Login and check password
     $stmt = $conn->prepare("SELECT user_password FROM users WHERE user_name = ?");
     $stmt->bind_param("s", $form_username);
     $stmt->execute();
-    // Bind result variables
     $stmt->bind_result($hashed_password);
     $stmt->fetch();
 
     // Verify the password
     if (password_verify($form_password, $hashed_password)) {
+        // Token
+        $stmt = $conn->prepare("UPDATE users SET user_token = ? WHERE user_name = ?");
+        $stmt->bind_param("ss", $token, $form_username);
+        $stmt->execute();        
+
         // Set session variable
         $_SESSION['username'] = $form_username;
 
         // Set cookie
-        setcookie('token', $token, time() + (86400), "/"); // 86400 = 1 day
+        setcookie('token', $token, time() + (86400), "/"); // 1 day
 
         $message = '<div class="alert alert-success d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Zalogowano!</div>';
-        // Here you can set your session variables and redirect to the logged in area
     } else {
         $message = '<div class="alert alert-danger d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Błędny login lub hasło!</div>';
 
