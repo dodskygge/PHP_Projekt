@@ -1,19 +1,24 @@
 <?php
-include('../includes/db_conn.php');
+if (!isset($_SESSION)) {
+    session_start();
+}
+include_once('../includes/db_conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get data from form
     $form_username = $_POST['username'];
     $form_password = $_POST['password'];
     $token = bin2hex(random_bytes(16));
+    $token_expiry = date('Y-m-d H:i:s', strtotime('+1 day'));
     $message = '';
 
-    // Login and check password
+    // Check password
     $stmt = $conn->prepare("SELECT user_password FROM users WHERE user_name = ?");
     $stmt->bind_param("s", $form_username);
     $stmt->execute();
     $stmt->bind_result($hashed_password);
     $stmt->fetch();
+    $stmt->close();
 
     // Verify the password
     if (password_verify($form_password, $hashed_password)) {
@@ -21,20 +26,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare("UPDATE users SET user_token = ? WHERE user_name = ?");
         $stmt->bind_param("ss", $token, $form_username);
         $stmt->execute();        
+        //Token expiry
+        $stmt = $conn->prepare("UPDATE users SET user_token_expiry = ? WHERE user_name = ?");
+        $stmt->bind_param("ss", $token_expiry, $form_username);
+        $stmt->execute();   
 
         // Set session variable
         $_SESSION['username'] = $form_username;
 
         // Set cookie
         setcookie('token', $token, time() + (86400), "/"); // 1 day
+        $stmt->close();
 
-        $message = '<div class="alert alert-success d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Zalogowano!</div>';
+        $message = '<div class="alert alert-success d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Zalogowano pomyślnie!</div>';
+        sleep(3);
+        header("Location: /home.php");
     } else {
         $message = '<div class="alert alert-danger d-flex justify-content-center align-items-center" style="width: 250px; margin: auto;" role="alert">Błędny login lub hasło!</div>';
 
     }
 
-    $stmt->close();
+    
 }
 
 $conn->close();

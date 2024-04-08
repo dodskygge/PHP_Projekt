@@ -16,9 +16,16 @@
     // Pobierz bieżącą ścieżkę
     $current_page = basename($_SERVER['PHP_SELF']);
     //Start sesji
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    //DB conn
+    include('../includes/db_conn.php');
+    //session checker
+    require('../includes/session_check.php');
+    
     ?>
-
+    
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="header">
         <div class="container-fluid">
@@ -79,17 +86,17 @@
                             <button onclick="window.location.href='/mycart.php'"
                                 class="btn btn-outline-dark d-block mx-auto mt-3"><i class="fas fa-shopping-cart"></i>&nbsp;Przejdź do koszyka</button>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="window.location.href='/signup.php'" class="btn btn-primary navbar-btn m-1"><i
-                                class="fas fa-user"></i> Sign Up</button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="window.location.href='/login.php'"
-                            class="btn btn-success navbar-btn m-1"><i class="fas fa-sign-in-alt"></i> Login</button>
-                    </li>
+                        <?php
+                        if ($sessionChecker) {
+                            echo '<li class="nav-item"><button onclick="window.location.href=\'/myaccount.php\'" class="btn btn-primary navbar-btn m-1"><i class="fas fa-user"></i> Moje konto</button></li>';
+                            echo '<li class="nav-item"><button onclick="window.location.href=\'/logout.php\'" class="btn btn-danger navbar-btn m-1"><i class="fas fa-sign-out-alt"></i> Wyloguj</button></li>';
+                        } else {
+                            echo '<li class="nav-item"><button onclick="window.location.href=\'/signup.php\'" class="btn btn-primary navbar-btn m-1"><i class="fas fa-user"></i> Sign Up</button></li>';
+                            echo '<li class="nav-item"><button onclick="window.location.href=\'/login.php\'" class="btn btn-success navbar-btn m-1"><i class="fas fa-sign-in-alt"></i> Login</button></li>';
+                        }
+                        ?>
+
                 </ul>
             </div>
         </div>
     </nav>
-
