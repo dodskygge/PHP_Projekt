@@ -23,6 +23,9 @@
     include('../includes/db_conn.php');
     //session checker
     require('../includes/session_check.php');
+    //cart checker
+
+    //admin checker
     
     ?>
     
