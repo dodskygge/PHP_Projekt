@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Pobierz wpisany tekst z formularza
     $prompt = $_POST['prompt'];
 
-    // Przygotuj zapytanie SQL do przeszukania bazy danych
+    // SQL
     $sql = "SELECT * FROM products WHERE product_name LIKE '%" . $prompt . "%'";
     $result = $conn->query($sql);
 
