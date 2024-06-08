@@ -1,3 +1,0 @@
-Panel admina jako nowy przycisk
-Panel moje konto z ostatnimi zakupami
-Koszyk i zamówienie

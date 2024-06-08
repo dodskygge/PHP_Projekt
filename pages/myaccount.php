@@ -12,7 +12,6 @@
             <h2>Dane konta:</h2>
             <ul class="list-unstyled">
             <?php
-
                 //CZY ZALOGOWANY
                 if($sessionChecker == false){
                     echo '<tr><td colspan="4" class="text-center">Musisz być zalogowany, aby zobaczyć swoje konto.</td></tr>';
@@ -74,7 +73,6 @@
 
                             } else {
                                 //JEŚLI ZALOGOWANY
-
                                 $sql = "SELECT * FROM orders WHERE order_user_id = ".$_SESSION['userid'].";";
                                 $result = $conn->query($sql);
 

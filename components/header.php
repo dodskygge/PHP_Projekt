@@ -23,12 +23,14 @@
     include('../includes/db_conn.php');
     //session checker
     require('../includes/session_check.php');
+    //admin checker
+    require('../includes/admin_check.php');
     ?>
     
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="header">
         <div class="container-fluid">
-            <!-- BRAND/"HAMBURGER" -->
+            <!-- BRAND -->
             <a class="navbar-brand font-weight-bold" href="/" id="logo">ChipCom</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Rozwiń menu">
@@ -53,8 +55,28 @@
                             <a class="dropdown-item " href="/shop.php?category=accessories">Akcesoria</a>
                         </div>
                     </li>
-
                 </ul>
+
+                <!--CLOCK-->
+                <button id="clock" class="btn-secondary text-center"></div>
+                <script>
+                    function updateClock() {
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                    const day = now.getDate().toString().padStart(2, '0');
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+                    const dateString = `${day}-${month}-${year}`;
+                    const timeString = `${hours}:${minutes}:${seconds}`;
+                    document.getElementById('clock').innerText = `${dateString} ${timeString}`;
+                    }
+
+                    setInterval(updateClock, 1000);
+                    updateClock();
+                </script>
 
                 <!--BUTTONS-->
                 <ul class="navbar-nav">
@@ -83,7 +105,12 @@
                                 ?>
                             </span>
                         </button>
+                        <!-- PRZYCISKI -->
                         <?php
+                        if($adminChecker == true) {
+                            echo '<li class="nav-item"><button onclick="window.location.href=\'/admin.php\'" class="btn btn-warning navbar-btn m-1"><i class="fas fa-user"></i> Admin</button></li>';
+                        }
+
                         if ($sessionChecker) {
                             echo '<li class="nav-item"><button onclick="window.location.href=\'/myaccount.php\'" class="btn btn-primary navbar-btn m-1"><i class="fas fa-user"></i> Moje konto</button></li>';
                             echo '<li class="nav-item"><button onclick="window.location.href=\'/logout.php\'" class="btn btn-danger navbar-btn m-1"><i class="fas fa-sign-out-alt"></i> Wyloguj</button></li>';

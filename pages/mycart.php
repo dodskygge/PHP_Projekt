@@ -26,7 +26,6 @@
 
                             } else {
                                 //JEŚLI ZALOGOWANY
-                                require('../includes/db_conn.php');
 
                                 $sql = "SELECT carts.cart_id, carts.cart_product_id, carts.cart_quantity, carts.cart_total, products.product_name, products.product_price, products.image_url
                                         FROM carts

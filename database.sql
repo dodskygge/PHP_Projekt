@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS products (
     product_price DECIMAL(10, 2) NOT NULL,
     product_quantity INT NOT NULL,
     product_category VARCHAR(50) NOT NULL,
-    product_sold INT NOT NULL,
     product_discount DECIMAL(10, 2) NOT NULL,
     image_url VARCHAR(255)
 );
