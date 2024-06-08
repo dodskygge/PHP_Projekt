@@ -1,9 +1,3 @@
-Baza danych:
-    Sortowanie po kategoriach produktów
-    Szukanie
-
-
-
-
-Główne zadania:
-    Poprawić wygląd okienek dla zakupu
+Panel admina jako nowy przycisk
+Panel moje konto z ostatnimi zakupami
+Koszyk i zamówienie

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form_password = $_POST['password'];
     $token = bin2hex(random_bytes(16));
     $token_expiry = date('Y-m-d H:i:s', strtotime('+1 day'));
-    $message = '';
+    $message = ''; //notification message
 
     // Check password
     $stmt = $conn->prepare("SELECT user_password FROM users WHERE user_name = ?");
@@ -22,6 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verify the password
     if (password_verify($form_password, $hashed_password)) {
+        // Session user id variable
+        $stmtid = $conn->prepare("SELECT user_id FROM users WHERE user_name = ?");
+        $stmtid->bind_param("s", $form_username);
+        $stmtid->execute();  
+        $stmtid->bind_result($_SESSION['userid']);
+        $stmtid->fetch();
+        $stmtid->close();
         // Token
         $stmt = $conn->prepare("UPDATE users SET user_token = ? WHERE user_name = ?");
         $stmt->bind_param("ss", $token, $form_username);

@@ -23,10 +23,6 @@
     include('../includes/db_conn.php');
     //session checker
     require('../includes/session_check.php');
-    //cart checker
-
-    //admin checker
-    
     ?>
     
     <!-- HEADER -->
@@ -54,41 +50,39 @@
                             <a class="dropdown-item " href="/shop.php?category=all">Wszystkie</a>
                             <a class="dropdown-item " href="/shop.php?category=computers">Komputery</a>
                             <a class="dropdown-item " href="/shop.php?category=laptops">Laptopy</a>
-                            <a class="dropdown-item " href="/shop.php?category=microcontrollers">Mikrokontrolery</a>
+                            <a class="dropdown-item " href="/shop.php?category=accessories">Akcesoria</a>
                         </div>
                     </li>
 
-                    <li class="nav-item <?php if($current_page == 'aboutus.php') echo 'active'; ?>">
-                        <a class="nav-link" href="/aboutus.php">O nas</a>
-                    </li>
-
-                    <li class="nav-item <?php if($current_page == 'contact.php') echo 'active'; ?>">
-                        <a class="nav-link" href="/contact.php">Kontakt</a>
-                    </li>
                 </ul>
 
                 <!--BUTTONS-->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <button onclick="window.location.href='/search.php'" class="btn btn-outline-light m-1"
-                                type="button" data-toggle="collapse" data-target="#searchBar"><i class="fas fa-search"></i>Szukaj</button>
+                                type="button" data-target="#searchBar"><i class="fas fa-search"></i>Szukaj</button>
                     </li>
                     <!--CART-->
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle m-1" type="button" data-toggle="dropdown"
-                            data-target="#cartMenu">
+                    <li class="nav-item">
+                        <button onclick="window.location.href='/mycart.php'" class="btn btn-outline-light m-1" type="button">
                             <i class="fas fa-shopping-cart"></i>
                             Koszyk
-                            <span class="badge bg-dark text-white rounded-pill">0</span>
+                            <span class="badge bg-dark text-white rounded-pill">
+                                <?php if ($sessionChecker) {
+                                            $query = "SELECT COUNT(*) FROM carts WHERE cart_user_id = ?";
+                                            $stmt = $conn->prepare($query);
+                                            $stmt->bind_param("i", $_SESSION['userid']);
+                                            $stmt->execute();
+                                            $stmt->bind_result($cart_count);
+                                            $stmt->fetch();
+                                            echo $cart_count;
+                                            $stmt->close();
+                                        } else {
+                                            echo '0';
+                                        }
+                                ?>
+                            </span>
                         </button>
-                        <div class="dropdown-menu cart-menu" >
-                            <a class="dropdown-item" href="#">Produkt 1</a>
-                            <a class="dropdown-item" href="#">Produkt 2</a>
-                            <a class="dropdown-item" href="#">Produkt 3</a>
-                            <a class="dropdown-item" href="#">Produkt 4</a>
-                            <button onclick="window.location.href='/mycart.php'"
-                                class="btn btn-outline-dark d-block mx-auto mt-3"><i class="fas fa-shopping-cart"></i>&nbsp;Przejdź do koszyka</button>
-                        </div>
                         <?php
                         if ($sessionChecker) {
                             echo '<li class="nav-item"><button onclick="window.location.href=\'/myaccount.php\'" class="btn btn-primary navbar-btn m-1"><i class="fas fa-user"></i> Moje konto</button></li>';

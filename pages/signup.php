@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form_password = $_POST['password'];
     $form_email_check = $_POST['mailCheck'];
     $form_password_check = $_POST['passwordCheck'];
+    $user_role = "user";
 
         // Check if email and password are the same
         if ($form_email != $form_email_check) {
@@ -31,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $hashed_password = password_hash($form_password, PASSWORD_DEFAULT);
 
                     // SQL query
-                    $sql = "INSERT INTO users (user_name, user_email, user_password) VALUES (?, ?, ?)";
+                    $sql = "INSERT INTO users (user_name, user_email, user_password, user_role) VALUES (?, ?, ?, ?)";
 
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("sss", $form_username, $form_email, $hashed_password);
+                    $stmt->bind_param("ssss", $form_username, $form_email, $hashed_password, $user_role);
 
                     // Execute SQL query
                     if ($stmt->execute()) {

@@ -5,10 +5,6 @@ unset($_SESSION['username']);
 $sessionChecker = false;
 
 setcookie('token', '', time() - 3600, "/");
-// Przekieruj na stronę główną
-//header("Location: /");
-
-
 
 sleep(3);
 header("Location: /");

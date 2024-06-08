@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                                 <div class="d-flex justify-content-around gap-2 card-footer p-2 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center"><a class="btn btn-sm btn-outline-dark mt-auto" href="#">Do koszyka</a></div>
-                                    <div class="text-center"><a class="btn btn-sm btn-outline-dark mt-auto" href="#">Zobacz opis</a></div>
                                 </div>
                             </div>
                         </div>
