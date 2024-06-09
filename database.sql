@@ -41,7 +41,9 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (order_user_id) REFERENCES users(user_id),
     order_adress TEXT NOT NULL,
     order_products TEXT NOT NULL,
+    order_products_id TEXT NOT NULL,
     order_total DECIMAL(10, 2) NOT NULL,
+    order_payment VARCHAR(50) NOT NULL,
     order_status VARCHAR(50) NOT NULL,
     order_date DATETIME
 );

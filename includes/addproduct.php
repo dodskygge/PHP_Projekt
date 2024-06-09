@@ -10,7 +10,7 @@
     $product_quantity = intval($_POST['product_quantity']);
     $product_category = $_POST['product_category'];
     $product_discount = intval($_POST['product_discount']);
-    $image_url = $_POST['image_url'];
+    $image_url = "img/" . $_POST['image_url'];
 
     // INSERT product
     $query = "INSERT INTO products (product_name, product_price, product_quantity, product_category, product_discount, image_url) VALUES (?, ?, ?, ?, ?, ?)";

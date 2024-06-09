@@ -11,7 +11,9 @@
     $order_product = "";
     $order_total = 0;
     $date = date("Y-m-d H:i:s");
-    $order_status = "W trakcie realizacji";
+    $order_status = "Zamówienie złożone";
+    $order_products_id = "";
+    $order_payment = $_POST['order_payment'];
 
     //Pobranie koszyka
     $query = "SELECT carts.cart_id, carts.cart_product_id, carts.cart_quantity, carts.cart_total, products.product_name, products.product_price
@@ -29,12 +31,15 @@
         while($row = $result->fetch_assoc()) {
             $order_product .= $row['product_name'] . " x" . $row['cart_quantity'] . ", ";
             $order_total += $row['cart_total'];
+            for($i = 0; $i < $row['cart_quantity']; $i++) {
+                $order_products_id .= strval($row['cart_product_id']) . ",";
+            }
         }
 
         //INSERT
-        $query = "INSERT INTO orders (order_user_id, order_adress, order_products, order_total, order_status, order_date) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO orders (order_user_id, order_adress, order_products, order_products_id, order_total, order_payment , order_status, order_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("issdss", $user_id, $order_adress, $order_product, $order_total, $order_status, $date);
+        $stmt->bind_param("isssdsss", $user_id, $order_adress, $order_product, $order_products_id, $order_total,$order_payment, $order_status, $date);
 
     } else {
         // Jeśli brak produktów w koszyku to wyjdź

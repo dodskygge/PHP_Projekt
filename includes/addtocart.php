@@ -1,12 +1,13 @@
 <?php include('../components/header.php'); ?>
 <?php
     if($sessionChecker == false){
-        echo 'Musisz być zalogowany, aby dodawać do koszyka';
+        echo '<h2 class="mt-2 text-center">Musisz być zalogowany, aby dodawać do koszyka!</h2>';
         exit();
     }
 
     $user_id = $_SESSION['userid'];
     $product_id = intval($_POST['product_id']);
+    $page_category = $_POST['page_category'];
     $product_price = 0;
     $total = 0;
     $quantity = 1;
@@ -52,7 +53,11 @@
     $stmt->close();
     $conn->close();
 
-    header("Location: ../shop.php?category=all");
+    if($page_category == "") {
+        header("Location: ../search.php");  
+    } else {
+        header("Location: ../shop.php?category=$page_category");
+    }
     exit();
 ?>
 <?php include('../components/footer.php'); ?>
