@@ -7,11 +7,29 @@
 
     $order_id = intval($_POST['order_id']);
 
-    // UPDATE Not Complete order
+    // SELECT Product ids from order
+    $query = "SELECT order_products_id FROM orders WHERE order_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $order_products_id = $row['order_products_id'];
+    //Parse
+    $products_ids = preg_split("/,/", $order_products_id, -1, PREG_SPLIT_NO_EMPTY);
+
+    // UPDATE Decrease product quantity
+    foreach ($products_ids as $number) {
+        $query = "UPDATE products SET product_quantity = product_quantity + 1 WHERE product_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $number);
+        $stmt->execute();
+    }
+
+    // UPDATE Complete order
     $query = "UPDATE orders SET order_status = 'Zamówienie w trakcie realizacji' WHERE order_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $order_id);
-
 
     if ($stmt->execute()) {
         $stmt->close();

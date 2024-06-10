@@ -3,6 +3,8 @@
 <!-- REALIZACJA ZAMÓWIEŃ -->
 <section class="py-4" id="zamowienia">
 
+
+
     <div class="container">
         <div class="row">
             <div class="col text-center">
@@ -49,6 +51,19 @@
                                 if ($result->num_rows > 0) {
                                     $counter = 1;
                                     while($row = $result->fetch_assoc()) {
+                                        $order_status = strval($row['order_status']);
+
+                                        if($order_status == 'Zamówienie zrealizowane') {
+                                            $button1 = 'disabled';
+                                            $button2 = '';
+                                        } elseif($order_status == 'Zamówienie w trakcie realizacji') {
+                                            $button1 = '';
+                                            $button2 = 'disabled';
+                                        } else {
+                                            $button1 = '';
+                                            $button2 = '';
+                                        }
+
                                         ?>
                                         <tr>
                                             <th scope="row"><?php echo $counter++; ?></th>
@@ -61,11 +76,11 @@
                                             <td>
                                                 <form action="includes/completeorder.php" method="post" class="form-order" id="FormOrder">
                                                 <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
-                                                <input type="submit" value="Zrealizowane"></form>
+                                                <input type="submit" value="Zrealizowane" <?php echo strval($button1) ?>></form>
 
                                                 <form action="includes/notcompleteorder.php" method="post" class="form-order" id="FormOrder">
                                                 <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
-                                                <input type="submit" value="W trakcie realizacji"></form>
+                                                <input type="submit" value="W trakcie realizacji" <?php echo strval($button2) ?>></form>
 
                                                 <form action="includes/removeorder.php" method="post" class="form-order" id="FormOrder" onsubmit="return confirm('Czy na pewno chcesz usunąć zamówienie?')">
                                                 <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
@@ -77,7 +92,7 @@
                                 } else {
                                     ?>
                                     <tr>
-                                        <td colspan="6" class="text-center">Brak aktywnych zamówień.</td>
+                                        <td colspan="8" class="text-center">Brak aktywnych zamówień.</td>
                                     </tr>
                                     <?php
                                 }
@@ -115,7 +130,7 @@
 
                             //CZY ZALOGOWANY
                             if($sessionChecker == false && $adminChecker == false){
-                                echo '<tr><td colspan="6" class="text-center">Musisz być zalogowany jako admin, aby zobaczyć zawartość.</td></tr>';
+                                echo '<tr><td colspan="8" class="text-center">Musisz być zalogowany jako admin, aby zobaczyć zawartość.</td></tr>';
                                 exit();
 
                             } else {
@@ -153,7 +168,7 @@
                                 } else {
                                     ?>
                                     <tr>
-                                        <td colspan="6" class="text-center">Brak użytkowników.</td>
+                                        <td colspan="5" class="text-center">Brak użytkowników.</td>
                                     </tr>
                                     <?php
                                 }
@@ -192,7 +207,7 @@
                     <?php
                         //CZY ZALOGOWANY
                         if ($sessionChecker == false && $adminChecker == false) {
-                            echo '<tr><td colspan="7" class="text-center">Musisz być zalogowany jako admin, aby zobaczyć zawartość.</td></tr>';
+                            echo '<tr><td colspan="6" class="text-center">Musisz być zalogowany jako admin, aby zobaczyć zawartość.</td></tr>';
                             exit();
                         } else {
                             // Paginacja
