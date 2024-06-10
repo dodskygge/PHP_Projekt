@@ -1,5 +1,13 @@
-<?php include('../components/header.php'); ?>
+<?php include('../components/header.php');
 
+//CZY ZALOGOWANY
+if($sessionChecker == false && $adminChecker == false){
+    header("Location: ../index.php");
+    exit();
+
+} else {
+
+?>
 <!-- REALIZACJA ZAMÓWIEŃ -->
 <section class="py-4" id="zamowienia">
 
@@ -37,13 +45,6 @@
                         </thead>
                         <tbody>
                             <?php
-
-                            //CZY ZALOGOWANY
-                            if($sessionChecker == false && $adminChecker == false){
-                                echo '<tr><td colspan="6" class="text-center">Musisz być zalogowany jako admin, aby zobaczyć zawartość.</td></tr>';
-                                exit();
-
-                            } else {
                                 //JEŚLI ZALOGOWANY
                                 $sql = "SELECT * FROM orders";
                                 $result = $conn->query($sql);
