@@ -7,8 +7,8 @@
 
     $order_id = intval($_POST['order_id']);
 
-    // SELECT Product ids from order
-    $query = "SELECT order_products_id FROM orders WHERE order_id = ?";
+    // SELECT Product ids and order status from order 
+    $query = "SELECT order_products_id, order_status FROM orders WHERE order_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
@@ -18,12 +18,14 @@
     //Parse
     $products_ids = preg_split("/,/", $order_products_id, -1, PREG_SPLIT_NO_EMPTY);
 
-    // UPDATE Decrease product quantity
-    foreach ($products_ids as $number) {
-        $query = "UPDATE products SET product_quantity = product_quantity + 1 WHERE product_id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $number);
-        $stmt->execute();
+    // UPDATE Increase product quantity if order is already completed
+    if($row['order_status']=='Zamówienie zrealizowane') {
+        foreach ($products_ids as $number) {
+            $query = "UPDATE products SET product_quantity = product_quantity + 1 WHERE product_id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $number);
+            $stmt->execute();
+        }
     }
 
     // UPDATE Complete order

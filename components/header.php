@@ -32,13 +32,9 @@
         <div class="container-fluid">
             <!-- BRAND -->
             <a class="navbar-brand font-weight-bold" href="/" id="logo">ChipCom</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Rozwiń menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
             <!-- MENU -->
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto d-flex">
                     <li class="nav-item <?php if($current_page == 'index.php') echo 'active'; ?>">
                         <a class="nav-link" href="/">Strona główna</a>
