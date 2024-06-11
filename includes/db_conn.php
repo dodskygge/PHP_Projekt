@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username = "root";
-    $password = "s";
+    $password = "";
     $dbname = "php_projekt";
     $sessionChecker = false;
 
